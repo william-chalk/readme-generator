@@ -1,10 +1,23 @@
 // TODO: Include packages needed for this application
-const inquirer = require("inquirer");
-const generateMarkDown = require("./utils/generateMarkdown");
 const fs = require("fs");
-const { rejects } = require("assert");
+const inquirer = require("inquirer");
+const { type } = require("os");
+const generateMarkDown = require("./utils/generateMarkdown");
 // TODO: Create an array of questions for user input
 const questions = [
+  {
+    type: "input",
+    name: "github",
+    message: "What is your Github username? (Required)",
+    validate: (githubInput) => {
+      if (githubInput) {
+        return true;
+      } else {
+        console.log("Please enter your Github username!");
+        return false;
+      }
+    },
+  },
   {
     type: "input",
     name: "title",
@@ -62,6 +75,25 @@ const questions = [
   },
   {
     type: "confirm",
+    name: "licenseConfirm",
+    message: "Would you like to add a license?",
+    default: true,
+  },
+  {
+    type: "checkbox",
+    name: "license",
+    message: "Please select the license",
+    choices: ["MIT", "Apache", "GPL", "BSD(2-clause)", "BSD(3-clause)"],
+    when: ({ licenseConfirm }) => {
+      if (licenseConfirm) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+  },
+  {
+    type: "confirm",
     name: "confirmCredits",
     message: "Would you like to add collaborators for your project?",
     default: true,
@@ -69,7 +101,8 @@ const questions = [
   {
     type: "input",
     name: "credits",
-    message: "Provide the names and GitHub links for your collaborators",
+    message:
+      'Provide the GitHub usernames for your collaborators (usernames are seperated by ",")',
     when: ({ confirmCredits }) => {
       if (confirmCredits) {
         return true;
@@ -97,15 +130,17 @@ function writeToFile(data) {
 }
 
 // TODO: Create a function to initialize app
-function init(readMeData) {
+function init() {
   return inquirer.prompt(questions);
 }
 
 // Function call to initialize app
 init()
-  .then((userData) => {
-    return generateMarkDown(userData);
+  .then((readMEData) => {
+    console.log(readMEData);
+    return generateMarkDown(readMEData);
   })
-  .then((generateFile) => {
-    return writeToFile(generateFile);
+  .then((readMEFile) => {
+    console.log(readMEFile);
+    return writeToFile(readMEFile);
   });
