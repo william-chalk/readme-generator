@@ -80,7 +80,7 @@ const questions = [
     default: true,
   },
   {
-    type: "checkbox",
+    type: "list",
     name: "license",
     message: "Please select the license",
     choices: ["MIT", "Apache", "GPL", "BSD(2-clause)", "BSD(3-clause)"],
