@@ -25,8 +25,16 @@ THEN this is added to the section of the README entitled Questions, with instruc
 WHEN I click on the links in the Table of Contents
 THEN I am taken to the corresponding section of the README
 ```
+
 ## Install
 ```
 npm i
 ```
+
+## Instructions 
+
+
+https://user-images.githubusercontent.com/108630160/193147535-99eab9fb-7241-4dc7-96c9-712ce0d9e2cd.mp4
+
+
 
